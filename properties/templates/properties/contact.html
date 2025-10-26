@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Контакти - Dobre Wohnka{% endblock %}
+
+{% block content %}
+<section class="page-header page-header-contact">
+    <div class="wrap">
+        <h1><i class="fas fa-phone"></i> Контакти</h1>
+        <p>Зв'яжіться з нами будь-яким зручним способом</p>
+    </div>
+</section>
+
+<section class="contact-section-main">
+    <div class="wrap">
+        <div class="contact-grid">
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h2>Наші контакти</h2>
+                <p>Ми завжди раді допомогти вам з будь-яких питань щодо нерухомості!</p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="method-info">
+                            <h3>Телефони</h3>
+                            <p><a href="tel:+380961234567">+38 096 123 45 67</a></p>
+                            <p><a href="tel:+380971234567">+38 097 123 45 67</a></p>
+                            <p><a href="tel:+380631234567">+38 063 123 45 67</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="method-info">
+                            <h3>Email</h3>
+                            <p><a href="mailto:info@dobrewohnka.com">info@dobrewohnka.com</a></p>
+                            <p><a href="mailto:support@dobrewohnka.com">support@dobrewohnka.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="method-info">
+                            <h3>Графік роботи</h3>
+                            <p>Понеділок - П'ятниця: 9:00 - 18:00</p>
+                            <p>Субота: 9:00 - 15:00</p>
+                            <p>Неділя: Вихідний</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="method-info">
+                            <h3>Адреса офісу</h3>
+                            <p>м. Львів, вул. Городоцька 180</p>
+                            <p>ТЦ "Кінг Крос Leopolis", 2 поверх</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="social-contact">
+                    <h3>Месенджери</h3>
+                    <div class="messenger-links">
+                        <a href="https://t.me/dobrewohnka" target="_blank" class="messenger-btn telegram">
+                            <i class="fab fa-telegram"></i> Telegram
+                        </a>
+                        <a href="https://wa.me/380961234567" target="_blank" class="messenger-btn whatsapp">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="viber://chat?number=380961234567" target="_blank" class="messenger-btn viber">
+                            <i class="fab fa-viber"></i> Viber
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="social-media">
+                    <h3>Соціальні мережі</h3>
+                    <div class="social-links-large">
+                        <a href="https://facebook.com" target="_blank" class="social-btn facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="social-btn instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="social-btn linkedin">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="social-btn youtube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="contact-form-container">
+                <h2>Напишіть нам</h2>
+                <p>Заповніть форму, і ми зв'яжемося з вами найближчим часом</p>
+                
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name"><i class="fas fa-user"></i> Ім'я *</label>
+                        <input type="text" id="name" name="name" required placeholder="Ваше ім'я">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone"><i class="fas fa-phone"></i> Телефон *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+38 XXX XXX XX XX">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject"><i class="fas fa-tag"></i> Тема</label>
+                        <select id="subject" name="subject">
+                            <option value="buy">Купівля нерухомості</option>
+                            <option value="rent">Оренда нерухомості</option>
+                            <option value="sell">Продаж нерухомості</option>
+                            <option value="consultation">Консультація</option>
+                            <option value="other">Інше питання</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message"><i class="fas fa-comment"></i> Повідомлення *</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Опишіть ваше питання..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-large btn-full">
+                        <i class="fas fa-paper-plane"></i> Відправити повідомлення
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Map Section -->
+        <div class="map-section">
+            <h2>Наше розташування</h2>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.0!2d24.0!3d49.84!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDnCsDUwJzI2LjQiTiAyNMKwMDAnMDAuMCJF!5e0!3m2!1sen!2sua!4v1234567890"
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Дякуємо за ваше повідомлення! Ми зв\'яжемося з вами найближчим часом.');
+        this.reset();
+    });
+</script>
+{% endblock %}
+

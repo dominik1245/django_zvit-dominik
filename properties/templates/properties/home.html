@@ -1,0 +1,308 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load property_extras %}
+
+{% block title %}Dobre Wohnka - Головна сторінка{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="wrap hero-content">
+        <h1 class="hero-title">Знайдіть свій <span class="accent">ідеальний дім</span></h1>
+        <p class="hero-subtitle">Понад 1000+ об'єктів нерухомості у найкращих локаціях України</p>
+        
+        <!-- Quick Search -->
+        <div class="hero-search">
+            <form method="GET" action="{% url 'properties:simple_search' %}" class="search-form">
+                <div class="search-tabs">
+                    <button type="button" class="search-tab active" data-type="sale">
+                        <i class="fas fa-tags"></i> Купити
+                    </button>
+                    <button type="button" class="search-tab" data-type="rent">
+                        <i class="fas fa-key"></i> Орендувати
+                    </button>
+                </div>
+                
+                <input type="hidden" name="type" id="searchType" value="sale">
+                
+                <div class="search-fields">
+                    <div class="search-field">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <select name="city">
+                            <option value="">Оберіть місто</option>
+                            <option value="Київ">Київ</option>
+                            <option value="Харків">Харків</option>
+                            <option value="Дніпро">Дніпро</option>
+                            <option value="Львів">Львів</option>
+                            <option value="Одеса">Одеса</option>
+                        </select>
+                    </div>
+                    
+                    <div class="search-field">
+                        <i class="fas fa-dollar-sign"></i>
+                        <input type="number" name="max_price" placeholder="Максимальна ціна (₴)">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-search">
+                        <i class="fas fa-search"></i> Шукати
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Stats -->
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-number">1000+</div>
+                <div class="stat-label">Об'єктів</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Міст</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Підтримка</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section">
+    <div class="wrap">
+        <div class="section-header">
+            <h2>Послуги</h2>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h3>Орендувати</h3>
+                <p>Знайдіть ідеальну квартиру для оренди</p>
+                <a href="{% url 'properties:rent' %}" class="btn btn-outline">Переглянути</a>
+        </div>
+        
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-tags"></i>
+            </div>
+                <h3>Купити</h3>
+                <p>Купуйте нерухомість на вигідних умовах</p>
+                <a href="{% url 'properties:sale' %}" class="btn btn-outline">Переглянути</a>
+        </div>
+        
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>Здати в оренду</h3>
+                <p>Здайте свою нерухомість в оренду</p>
+                <a href="{% url 'properties:property_list' %}" class="btn btn-outline">Переглянути</a>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Продати</h3>
+                <p>Продайте нерухомість швидко та вигідно</p>
+                <a href="{% url 'properties:property_list' %}" class="btn btn-outline">Переглянути</a>
+            </div>
+        </div>
+                </div>
+</section>
+
+<!-- Company Section -->
+<section class="company-section">
+    <div class="wrap">
+        <div class="section-header">
+            <h2>Компанія</h2>
+            </div>
+            
+        <div class="company-grid">
+            <div class="company-card">
+                <h3>Про нас</h3>
+                <p>Дізнайтеся більше про нашу компанію та місію</p>
+                <a href="{% url 'properties:about' %}" class="btn btn-outline">Детальніше</a>
+                </div>
+            
+            <div class="company-card">
+                <h3>Відгуки</h3>
+                <p>Що кажуть про нас наші клієнти</p>
+                <a href="#" class="btn btn-outline">Читати</a>
+            </div>
+            
+            <div class="company-card">
+                <h3>Вакансії</h3>
+                <p>Приєднуйтеся до нашої команди</p>
+                <a href="#" class="btn btn-outline">Переглянути</a>
+                </div>
+            
+            <div class="company-card">
+                <h3>Блог</h3>
+                <p>Корисні статті про нерухомість</p>
+                <a href="#" class="btn btn-outline">Читати</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Properties -->
+<section class="featured-section">
+    <div class="wrap">
+        <div class="section-header">
+            <h2>Рекомендовані <span class="accent">пропозиції</span></h2>
+            <p>Найкращі об'єкти нерухомості цього місяця</p>
+        </div>
+        
+        <div class="properties-grid">
+            {% for property in featured_properties %}
+            <article class="property-card">
+                <div class="property-badge">
+                    {% if property.property_type == 'sale' %}
+                    <span class="badge badge-sale"><i class="fas fa-tags"></i> Продаж</span>
+                    {% else %}
+                    <span class="badge badge-rent"><i class="fas fa-key"></i> Оренда</span>
+                    {% endif %}
+                </div>
+                
+                <div class="property-image">
+                    {% if property.images.exists %}
+                        {% with property.images.first as first_image %}
+                        {% if first_image.get_image_source %}
+                        <img src="{{ first_image.get_image_source }}" alt="{{ property.title }}">
+                        {% else %}
+                        <img src="{% static property|get_property_image %}" alt="{{ property.title }}">
+                        {% endif %}
+                        {% endwith %}
+                    {% else %}
+                        <img src="{% static property|get_property_image %}" alt="{{ property.title }}">
+                    {% endif %}
+                </div>
+                
+                <div class="property-body">
+                    <h3 class="property-title">{{ property.title }}</h3>
+                    
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        {{ property.city }}
+                    </div>
+                    
+                    <div class="property-price">
+                        {{ property.price|floatformat:0 }} {{ property.get_currency_symbol }}
+                    </div>
+                    
+                    <div class="property-features">
+                        {% if property.rooms %}
+                        <span><i class="fas fa-door-open"></i> {{ property.rooms }} кім.</span>
+                        {% endif %}
+                        {% if property.area %}
+                        <span><i class="fas fa-ruler-combined"></i> {{ property.area }} м²</span>
+                        {% endif %}
+                        {% if property.floor %}
+                        <span><i class="fas fa-layer-group"></i> {{ property.floor }} пов.</span>
+                        {% endif %}
+                    </div>
+                    
+                    <a href="{% url 'properties:property_detail' property.pk %}" class="btn btn-primary btn-full">
+                        Детальніше <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </article>
+            {% empty %}
+            <p class="no-results">Наразі немає доступних оголошень</p>
+            {% endfor %}
+        </div>
+        
+        <div class="section-footer">
+            <a href="{% url 'properties:property_list' %}" class="btn btn-outline btn-large">
+                Переглянути всі оголошення <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- How We Work -->
+<section class="how-we-work-section">
+    <div class="wrap">
+        <div class="section-header">
+            <h2>Як ми <span class="accent">працюємо</span>?</h2>
+            <p>Простий процес підбору вашого ідеального житла</p>
+        </div>
+        
+        <div class="work-process-grid">
+            <div class="process-step">
+                <div class="step-number">01</div>
+                <div class="step-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Підбір житла</h3>
+                <p>Вкажіть ваші побажання щодо локації, площі, кількості кімнат та інших параметрів. Наша система знайде найкращі варіанти.</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">02</div>
+                <div class="step-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <h3>Консультація</h3>
+                <p>Наш експерт зв'яжеться з вами, відповість на всі питання та допоможе визначитися з оптимальним варіантом.</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">03</div>
+                <div class="step-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3>Перегляд</h3>
+                <p>Організуємо огляд обраних об'єктів у зручний для вас час. Покажемо всі деталі та особливості житла.</p>
+            </div>
+            
+            <div class="process-step">
+                <div class="step-number">04</div>
+                <div class="step-icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <h3>Оформлення</h3>
+                <p>Допоможемо з юридичним оформленням угоди, підготовкою документів та безпечним проведенням транзакції.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="wrap">
+        <div class="cta-content">
+            <h2>Готові знайти свій дім мрії?</h2>
+            <p>Зв'яжіться з нами прямо зараз, і наші експерти допоможуть вам</p>
+            <div class="cta-buttons">
+                <a href="{% url 'properties:contact' %}" class="btn btn-primary btn-large">
+                    <i class="fas fa-phone"></i> Зв'язатися з нами
+                </a>
+                <a href="{% url 'properties:property_list' %}" class="btn btn-outline btn-large">
+                    <i class="fas fa-search"></i> Переглянути каталог
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Search tabs functionality
+    const searchTabs = document.querySelectorAll('.search-tab');
+    const searchTypeInput = document.getElementById('searchType');
+    
+    searchTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            searchTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            searchTypeInput.value = this.dataset.type;
+        });
+    });
+</script>
+{% endblock %}
+

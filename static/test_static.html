@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Тест статичних файлів</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-image { max-width: 500px; border: 2px solid #ccc; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Тест статичних файлів</h1>
+    
+    <h2>Тестове зображення 1 (з static/properties/images/about/test.jpg)</h2>
+    <p>Шлях: /static/properties/images/about/test.jpg</p>
+    <img src="/static/properties/images/about/test.jpg" alt="Тест 1" class="test-image">
+    
+    <h2>Тестове зображення 2 (з staticfiles/properties/images/about/test.jpg)</h2>
+    <p>Шлях: /staticfiles/properties/images/about/test.jpg</p>
+    <img src="/staticfiles/properties/images/about/test.jpg" alt="Тест 2" class="test-image">
+    
+    <h2>Тестове зображення 3 (пряме посилання на файл)</h2>
+    <p>Шлях: /static/test.jpg</p>
+    <img src="/static/test.jpg" alt="Тест 3" class="test-image">
+    
+    <h2>Вміст каталогу static</h2>
+    <pre>{% for item in static_files %}
+{{ item }}{% endfor %}</pre>
+</body>
+</html>

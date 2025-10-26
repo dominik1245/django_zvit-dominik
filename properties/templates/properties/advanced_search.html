@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Розширений пошук - Dobre Wohnka{% endblock %}
+
+{% block content %}
+<!-- Search Header -->
+<section class="search-header">
+    <div class="wrap">
+        <div class="search-header-content">
+            <h1>Розширений пошук нерухомості</h1>
+            <p>Знайдіть ідеальне житло з детальними фільтрами</p>
+        </div>
+    </div>
+</section>
+
+<!-- Filters Section -->
+<section class="filters-section">
+    <div class="wrap">
+        <div class="filters-container">
+            <!-- Filter Toggle Button -->
+            <div class="filter-toggle">
+                <button class="btn btn-outline" id="toggleFilters">
+                    <i class="fas fa-filter"></i> Фільтри
+                    <span class="filter-count" id="filterCount">0</span>
+                </button>
+            </div>
+            
+            <!-- Filters Panel -->
+            <div class="filters-panel" id="filtersPanel">
+                <form method="GET" class="filters-form">
+                    <div class="filters-grid">
+                        <!-- Basic Filters -->
+                        <div class="filter-group">
+                            <h3><i class="fas fa-home"></i> Основні параметри</h3>
+                            
+                            <div class="filter-row">
+                                <div class="filter-field">
+                                    <label>Тип нерухомості</label>
+                                    <select name="type">
+                                        <option value="">Всі типи</option>
+                                        {% for value, label in property_types %}
+                                        <option value="{{ value }}" {% if current_filters.type == value %}selected{% endif %}>{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-field">
+                                    <label>Місто</label>
+                                    <select name="city">
+                                        <option value="">Всі міста</option>
+                                        {% for city in cities %}
+                                        <option value="{{ city }}" {% if current_filters.city == city %}selected{% endif %}>{{ city }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-field">
+                                    <label>Максимальна ціна (₴)</label>
+                                    <input type="number" name="max_price" placeholder="Без обмежень" value="{{ current_filters.max_price }}">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sort -->
+                        <div class="filter-group">
+                            <h3><i class="fas fa-sort"></i> Сортування</h3>
+                            
+                            <div class="filter-row">
+                                <div class="filter-field">
+                                    <label>Сортувати за</label>
+                                    <select name="sort">
+                                        <option value="-created_at" {% if current_filters.sort == "-created_at" %}selected{% endif %}>Найновіші</option>
+                                        <option value="price" {% if current_filters.sort == "price" %}selected{% endif %}>Ціна: зростання</option>
+                                        <option value="-price" {% if current_filters.sort == "-price" %}selected{% endif %}>Ціна: спадання</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Застосувати фільтри
+                        </button>
+                        <a href="{% url 'properties:advanced_search' %}" class="btn btn-outline">
+                            <i class="fas fa-times"></i> Очистити
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section class="results-section">
+    <div class="wrap">
+        <div class="results-header">
+            <h2>Результати пошуку</h2>
+            <p>Знайдено {{ properties.count }} об'єктів</p>
+        </div>
+        
+        {% if properties %}
+        <div class="properties-grid">
+            {% for property in properties %}
+            <article class="property-card">
+                <div class="property-badge">
+                    {% if property.property_type == 'sale' %}
+                    <span class="badge badge-sale"><i class="fas fa-tags"></i> Продаж</span>
+                    {% else %}
+                    <span class="badge badge-rent"><i class="fas fa-key"></i> Оренда</span>
+                    {% endif %}
+                </div>
+                
+                <div class="property-image">
+                    {% if property.images.exists %}
+                        {% with property.images.first as first_image %}
+                        {% if first_image.get_image_source %}
+                        <img src="{{ first_image.get_image_source }}" alt="{{ property.title }}">
+                        {% else %}
+                        <div class="property-placeholder">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        {% endif %}
+                        {% endwith %}
+                    {% else %}
+                        <div class="property-placeholder">
+                            <i class="fas fa-home"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="property-body">
+                    <h3 class="property-title">{{ property.title }}</h3>
+                    
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        {{ property.city }}
+                    </div>
+                    
+                    <div class="property-price">
+                        {{ property.price|floatformat:0 }} {{ property.get_currency_symbol }}
+                    </div>
+                    
+                    <div class="property-features">
+                        {% if property.rooms %}
+                        <span><i class="fas fa-door-open"></i> {{ property.rooms }} кім.</span>
+                        {% endif %}
+                        {% if property.area %}
+                        <span><i class="fas fa-ruler-combined"></i> {{ property.area }} м²</span>
+                        {% endif %}
+                        {% if property.floor %}
+                        <span><i class="fas fa-layer-group"></i> {{ property.floor }} пов.</span>
+                        {% endif %}
+                    </div>
+                    
+                    <a href="{% url 'properties:property_detail' property.pk %}" class="btn btn-primary btn-full">
+                        Детальніше <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-results">
+            <div class="no-results-content">
+                <i class="fas fa-search"></i>
+                <h3>Нічого не знайдено</h3>
+                <p>Спробуйте змінити параметри пошуку або очистити фільтри</p>
+                <a href="{% url 'properties:advanced_search' %}" class="btn btn-primary">
+                    <i class="fas fa-refresh"></i> Очистити фільтри
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.getElementById('toggleFilters');
+    const filtersPanel = document.getElementById('filtersPanel');
+    const filterCount = document.getElementById('filterCount');
+    
+    // Toggle filters panel
+    toggleBtn.addEventListener('click', function() {
+        filtersPanel.classList.toggle('active');
+        this.classList.toggle('active');
+    });
+    
+    // Count active filters
+    function updateFilterCount() {
+        const form = document.querySelector('.filters-form');
+        const formData = new FormData(form);
+        let count = 0;
+        
+        for (let [key, value] of formData.entries()) {
+            if (value && value.trim() !== '') {
+                count++;
+            }
+        }
+        
+        filterCount.textContent = count;
+        filterCount.style.display = count > 0 ? 'inline' : 'none';
+    }
+    
+    // Update count on form change
+    const form = document.querySelector('.filters-form');
+    form.addEventListener('change', updateFilterCount);
+    updateFilterCount();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,435 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Пошук нерухомості - Dobre Wohnka{% endblock %}
+
+{% block content %}
+<!-- Search Header -->
+<section class="search-header">
+    <div class="wrap">
+        <div class="search-header-content">
+            <h1>Пошук нерухомості</h1>
+            <p>Знайдіть ідеальне житло за кількома кліками</p>
+        </div>
+    </div>
+</section>
+
+<!-- Simple Search Section -->
+<section class="simple-search-section">
+    <div class="wrap">
+        <div class="search-container">
+            <form method="GET" action="{% url 'properties:property_list' %}" class="simple-search-form">
+                <div class="search-tabs">
+                    <button type="button" class="search-tab active" data-type="sale">
+                        <i class="fas fa-tags"></i> Купити
+                    </button>
+                    <button type="button" class="search-tab" data-type="rent">
+                        <i class="fas fa-key"></i> Орендувати
+                    </button>
+                </div>
+                
+                <input type="hidden" name="type" id="searchType" value="sale">
+                
+                <div class="search-fields">
+                    <div class="search-field">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <select name="city">
+                            <option value="">Оберіть місто</option>
+                            <option value="Київ">Київ</option>
+                            <option value="Харків">Харків</option>
+                            <option value="Дніпро">Дніпро</option>
+                            <option value="Львів">Львів</option>
+                            <option value="Одеса">Одеса</option>
+                        </select>
+                    </div>
+                    
+                    <div class="search-field">
+                        <i class="fas fa-dollar-sign"></i>
+                        <input type="number" name="max_price" placeholder="Максимальна ціна (₴)">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-search">
+                        <i class="fas fa-search"></i> Шукати
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section class="results-section">
+    <div class="wrap">
+        <div class="results-header">
+            <h2>Результати пошуку</h2>
+            <p>Знайдено {{ properties.count }} об'єктів</p>
+        </div>
+        
+        {% if properties %}
+        <div class="properties-grid">
+            {% for property in properties %}
+            <article class="property-card">
+                <div class="property-badge">
+                    {% if property.property_type == 'sale' %}
+                    <span class="badge badge-sale"><i class="fas fa-tags"></i> Продаж</span>
+                    {% else %}
+                    <span class="badge badge-rent"><i class="fas fa-key"></i> Оренда</span>
+                    {% endif %}
+                </div>
+                
+                <div class="property-image">
+                    {% if property.images.exists %}
+                        {% with property.images.first as first_image %}
+                        {% if first_image.get_image_source %}
+                        <img src="{{ first_image.get_image_source }}" alt="{{ property.title }}">
+                        {% if property.images.count > 1 %}
+                        <div class="image-count">
+                            <i class="fas fa-images"></i> {{ property.images.count }}
+                        </div>
+                        {% endif %}
+                        {% else %}
+                        <div class="property-placeholder">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        {% endif %}
+                        {% endwith %}
+                    {% else %}
+                        <div class="property-placeholder">
+                            <i class="fas fa-home"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="property-body">
+                    <h3 class="property-title">{{ property.title }}</h3>
+                    
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        {{ property.city }}
+                    </div>
+                    
+                    <div class="property-price">
+                        {{ property.price|floatformat:0 }} {{ property.get_currency_symbol }}
+                    </div>
+                    
+                    <div class="property-features">
+                        {% if property.rooms %}
+                        <span><i class="fas fa-door-open"></i> {{ property.rooms }} кім.</span>
+                        {% endif %}
+                        {% if property.area %}
+                        <span><i class="fas fa-ruler-combined"></i> {{ property.area }} м²</span>
+                        {% endif %}
+                        {% if property.floor %}
+                        <span><i class="fas fa-layer-group"></i> {{ property.floor }} пов.</span>
+                        {% endif %}
+                    </div>
+                    
+                    <a href="{% url 'properties:property_detail' property.pk %}" class="btn btn-primary btn-full">
+                        Детальніше <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-results">
+            <div class="no-results-content">
+                <i class="fas fa-search"></i>
+                <h3>Нічого не знайдено</h3>
+                <p>Спробуйте змінити параметри пошуку</p>
+                <a href="{% url 'properties:simple_search' %}" class="btn btn-primary">
+                    <i class="fas fa-refresh"></i> Очистити пошук
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+.simple-search-section {
+    padding: 2rem 0;
+    background: var(--bg-secondary);
+}
+
+.search-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.simple-search-form {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.search-tabs {
+    display: flex;
+    margin-bottom: 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: 0.25rem;
+}
+
+.search-tab {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.search-tab.active {
+    background: white;
+    color: var(--primary-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.search-tab:hover {
+    background: white;
+    color: var(--primary-color);
+}
+
+.search-fields {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 1rem;
+    align-items: end;
+}
+
+.search-field {
+    position: relative;
+}
+
+.search-field i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    z-index: 2;
+}
+
+.search-field input,
+.search-field select {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 2.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.search-field input:focus,
+.search-field select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.btn-search {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+}
+
+.results-section {
+    padding: 2rem 0;
+}
+
+.results-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.results-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.results-header p {
+    color: var(--text-secondary);
+}
+
+.properties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.property-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.property-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.property-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 2;
+}
+
+.badge {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.badge-sale {
+    background: var(--success-color);
+    color: white;
+}
+
+.badge-rent {
+    background: var(--primary-color);
+    color: white;
+}
+
+.property-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.property-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.property-card:hover .property-image img {
+    transform: scale(1.05);
+}
+
+.property-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 3rem;
+}
+
+.image-count {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.property-body {
+    padding: 1.5rem;
+}
+
+.property-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.property-location {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.property-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.property-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.property-features span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.btn-full {
+    width: 100%;
+    justify-content: center;
+}
+
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.no-results-content i {
+    font-size: 4rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.no-results-content h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.no-results-content p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+</style>
+
+<script>
+// Search tabs functionality
+const searchTabs = document.querySelectorAll('.search-tab');
+const searchTypeInput = document.getElementById('searchType');
+
+searchTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+        searchTabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        searchTypeInput.value = this.dataset.type;
+    });
+});
+</script>
+{% endblock %}

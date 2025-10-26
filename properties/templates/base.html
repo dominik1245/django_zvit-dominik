@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dobre Wohnka - Оренда та продаж нерухомості{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="description" content="{% block description %}Dobre Wohnka - система підбору житла з урахуванням особистих побажань. Оренда, продаж, здавання в оренду та виставлення на продаж житла.{% endblock %}">
+    <meta name="keywords" content="нерухомість, оренда квартир, продаж квартир, житло, Львів, Київ, Харків, Дніпро, Одеса">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <div class="logo-section">
+                <a href="{% url 'properties:home' %}" class="logo-container">
+                    <!-- Логотип компанії -->
+                    <div class="company-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                    </div>
+                    <div class="brand-info">
+                        <h1 class="brand">Dobre <span class="accent">Wohnka</span></h1>
+                        <p class="tagline">Система підбору житла з урахуванням особистих побажань</p>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Contact Icons - Служба підтримки -->
+            <div class="header-contacts">
+                <div class="support-label">Зв'язок зі службою підтримки:</div>
+                <div class="contact-icons-group">
+                    <a href="https://t.me/dobrewohnka" target="_blank" class="contact-icon telegram-icon" title="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="https://wa.me/380961181112" target="_blank" class="contact-icon whatsapp-icon" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="viber://chat?number=380961181112" target="_blank" class="contact-icon viber-icon" title="Viber">
+                        <i class="fab fa-viber"></i>
+                    </a>
+                    <a href="tel:+380961181112" class="contact-icon phone-icon" title="Телефонувати">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="wrap">
+                <ul class="nav-links">
+                    <li><a href="{% url 'properties:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                        <i class="fas fa-home"></i> Головна
+                    </a></li>
+                    <li><a href="{% url 'properties:simple_search' %}" class="{% if request.resolver_match.url_name == 'simple_search' %}active{% endif %}">
+                        <i class="fas fa-search"></i> Пошук
+                    </a></li>
+                    <li><a href="{% url 'properties:rent' %}" class="{% if request.resolver_match.url_name == 'rent' %}active{% endif %}">
+                        <i class="fas fa-key"></i> Орендувати
+                    </a></li>
+                    <li><a href="{% url 'properties:sale' %}" class="{% if request.resolver_match.url_name == 'sale' %}active{% endif %}">
+                        <i class="fas fa-shopping-cart"></i> Купити
+                    </a></li>
+                    <li><a href="{% url 'properties:property_create' %}" class="{% if request.resolver_match.url_name == 'property_create' %}active{% endif %} btn-add-property">
+                        <i class="fas fa-plus-circle"></i> Додати оголошення
+                    </a></li>
+                    <li><a href="{% url 'properties:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                        <i class="fas fa-info-circle"></i> Про нас
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div class="footer-section footer-company">
+                    <h3>Dobre Wohnka</h3>
+                    <p>Система підбору житла з урахуванням особистих побажань. Оренда, продаж, здавання в оренду та виставлення на продаж житла.</p>
+                    <div class="social-links">
+                        <a href="https://instagram.com/dobrewohnka" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://tiktok.com/@dobrewohnka" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://facebook.com/dobrewohnka" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.youtube.com/@dobrewohnka" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Послуги</h4>
+                    <ul>
+                        <li><a href="{% url 'properties:rent' %}">Орендувати</a></li>
+                        <li><a href="{% url 'properties:sale' %}">Купити</a></li>
+                        <li><a href="{% url 'properties:property_list' %}">Здати в оренду</a></li>
+                        <li><a href="{% url 'properties:property_list' %}">Продати</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Компанія</h4>
+                    <ul>
+                        <li><a href="{% url 'properties:about' %}">Про нас</a></li>
+                        <li><a href="#">Відгуки</a></li>
+                        <li><a href="#">Вакансії</a></li>
+                        <li><a href="#">Блог</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section footer-support">
+                    <h4>Центр підтримки</h4>
+                    <p class="support-desc">Пн-Пт: 9:00 - 18:00<br>Сб: 9:00 - 15:00</p>
+                    <div class="contact-info">
+                        <a href="tel:+380969111812" class="phone-link">+38 096 911 18 12</a>
+                        <div class="contact-buttons">
+                            <a href="https://t.me/dobrewohnka" target="_blank" class="contact-btn telegram">
+                                <i class="fab fa-telegram"></i> Telegram
+                            </a>
+                            <a href="https://wa.me/380969111812" target="_blank" class="contact-btn whatsapp">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            </div>
+                            </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="footer-links">
+                        <a href="#">Пошук квартир</a>
+                        <a href="#">Чат-боти для пошуку квартир</a>
+                        <a href="#">Телеграм канали для пошуку квартир</a>
+                    </div>
+                <p>&copy; 2025 Dobre Wohnka. Всі права захищені.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'properties/js/main.js' %}"></script>
+</body>
+</html>
+

@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест дизайну - Dobre Wohnka</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <div class="logo-section">
+                <a href="#" class="logo-container">
+                    <div class="company-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                    </div>
+                    <div class="brand-info">
+                        <h1 class="brand">Dobre <span class="accent">Wohnka</span></h1>
+                        <p class="tagline">Система підбору житла з урахуванням особистих побажань</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="header-contacts">
+                <div class="support-label">Зв'язок зі службою підтримки:</div>
+                <div class="contact-icons-group">
+                    <a href="#" class="contact-icon telegram-icon" title="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="#" class="contact-icon whatsapp-icon" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="wrap hero-content">
+            <h1 class="hero-title">Дізнавайтеся першими про нові квартири</h1>
+            <p class="hero-subtitle">4,9 ★ 70 000+ користувачів</p>
+            
+            <div class="telegram-bot-section">
+                <div class="bot-steps">
+                    <div class="bot-step">
+                        <div class="step-number">Крок 1</div>
+                        <h3>Активуйте telegram-бот</h3>
+                        <div class="rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">70 000+ користувачів</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bot-step">
+                        <div class="step-number">Крок 2</div>
+                        <h3>Налаштуйте фільтри під себе</h3>
+                        <div class="rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">Детальніше про чат-бот</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bot-step">
+                        <div class="step-number">Крок 3</div>
+                        <h3>Шукайте квартиру в будь-який зручний час!</h3>
+                        <a href="#" class="btn btn-primary btn-large">
+                            <i class="fab fa-telegram"></i> Активувати бота
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="wrap">
+            <div class="section-header">
+                <h2>Послуги</h2>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3>Орендувати</h3>
+                    <p>Знайдіть ідеальну квартиру для оренди</p>
+                    <a href="#" class="btn btn-outline">Переглянути</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>Купити</h3>
+                    <p>Купуйте нерухомість на вигідних умовах</p>
+                    <a href="#" class="btn btn-outline">Переглянути</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Test Buttons -->
+    <div style="padding: 2rem; text-align: center; background: var(--bg-secondary);">
+        <h2>Тест кнопок та стилів</h2>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+            <button class="btn btn-primary">
+                <i class="fas fa-home"></i> Основна кнопка
+            </button>
+            <button class="btn btn-outline">
+                <i class="fas fa-search"></i> Контурна кнопка
+            </button>
+            <button class="btn btn-primary btn-large">
+                <i class="fas fa-telegram"></i> Велика кнопка
+            </button>
+        </div>
+    </div>
+
+    <!-- Debug Info -->
+    <div style="padding: 2rem; background: #f0f0f0; margin: 2rem 0;">
+        <h3>Інформація про статичні файли:</h3>
+        <p><strong>CSS шлях:</strong> {{ css_path }}</p>
+        <p><strong>CSS існує:</strong> {{ css_exists }}</p>
+        <p><strong>STATIC_URL:</strong> {{ static_url }}</p>
+        <p><strong>STATIC_ROOT:</strong> {{ static_root }}</p>
+        <p><strong>Пряме посилання на CSS:</strong> <a href="{{ static_url }}css/style.css" target="_blank">{{ static_url }}css/style.css</a></p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div class="footer-section footer-company">
+                    <h3>Dobre Wohnka</h3>
+                    <p>Система підбору житла з урахуванням особистих побажань.</p>
+                    <div class="social-links">
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2025 Dobre Wohnka. Всі права захищені.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

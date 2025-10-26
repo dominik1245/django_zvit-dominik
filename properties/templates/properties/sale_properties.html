@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load property_extras %}
+
+{% block title %}Купити нерухомість - Dobre Wohnka{% endblock %}
+
+{% block content %}
+<section class="page-header page-header-sale">
+    <div class="wrap">
+        <h1><i class="fas fa-tags"></i> Купити нерухомість</h1>
+        <p>{{ properties.count }} об'єктів доступних для покупки</p>
+    </div>
+</section>
+
+<section class="filters-section">
+    <div class="wrap">
+        <form method="GET" class="filters-form">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label><i class="fas fa-map-marker-alt"></i> Місто</label>
+                    <input type="text" name="city" placeholder="Введіть місто" value="{{ request.GET.city }}">
+                </div>
+                
+                <div class="filter-group">
+                    <label><i class="fas fa-door-open"></i> Кімнат</label>
+                    <select name="rooms">
+                        <option value="">Будь-яка кількість</option>
+                        <option value="1" {% if request.GET.rooms == '1' %}selected{% endif %}>1</option>
+                        <option value="2" {% if request.GET.rooms == '2' %}selected{% endif %}>2</option>
+                        <option value="3" {% if request.GET.rooms == '3' %}selected{% endif %}>3</option>
+                        <option value="4" {% if request.GET.rooms == '4' %}selected{% endif %}>4+</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label><i class="fas fa-dollar-sign"></i> Ціна від</label>
+                    <input type="number" name="min_price" placeholder="0" value="{{ request.GET.min_price }}">
+                </div>
+                
+                <div class="filter-group">
+                    <label><i class="fas fa-dollar-sign"></i> Ціна до</label>
+                    <input type="number" name="max_price" placeholder="999999" value="{{ request.GET.max_price }}">
+                </div>
+            </div>
+            
+            <div class="filter-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i> Застосувати фільтри
+                </button>
+                <a href="{% url 'properties:sale' %}" class="btn btn-outline">
+                    <i class="fas fa-redo"></i> Скинути
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section class="properties-section">
+    <div class="wrap">
+        <div class="properties-grid">
+            {% for property in properties %}
+            <article class="property-card">
+                <div class="property-badge">
+                    <span class="badge badge-sale"><i class="fas fa-tags"></i> Продаж</span>
+                </div>
+                
+                <div class="property-image">
+                    {% if property.images.exists %}
+                        {% with property.images.first as first_image %}
+                        {% if first_image.get_image_source %}
+                        <img src="{{ first_image.get_image_source }}" alt="{{ property.title }}">
+                        {% else %}
+                        <img src="{% static property|get_property_image %}" alt="{{ property.title }}">
+                        {% endif %}
+                        {% endwith %}
+                        {% if property.images.count > 1 %}
+                        <div class="image-count">
+                            <i class="fas fa-images"></i> {{ property.images.count }}
+                        </div>
+                        {% endif %}
+                    {% else %}
+                        <img src="{% static property|get_property_image %}" alt="{{ property.title }}">
+                    {% endif %}
+                </div>
+                
+                <div class="property-body">
+                    <h3 class="property-title">{{ property.title }}</h3>
+                    
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        {{ property.city }}
+                    </div>
+                    
+                    <div class="property-price">
+                        {{ property.price|floatformat:0 }} {{ property.get_currency_symbol }}
+                    </div>
+                    
+                    <div class="property-features">
+                        {% if property.rooms %}
+                        <span><i class="fas fa-door-open"></i> {{ property.rooms }} кім.</span>
+                        {% endif %}
+                        {% if property.area %}
+                        <span><i class="fas fa-ruler-combined"></i> {{ property.area }} м²</span>
+                        {% endif %}
+                        {% if property.floor %}
+                        <span><i class="fas fa-layer-group"></i> {{ property.floor }} пов.</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="property-extras">
+                        {% if property.balcony %}
+                        <span class="extra-badge"><i class="fas fa-check"></i> Балкон</span>
+                        {% endif %}
+                        {% if property.parking %}
+                        <span class="extra-badge"><i class="fas fa-check"></i> Паркінг</span>
+                        {% endif %}
+                    </div>
+                    
+                    <a href="{% url 'properties:property_detail' property.pk %}" class="btn btn-primary btn-full">
+                        Детальніше <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </article>
+            {% empty %}
+            <div class="no-results-full">
+                <i class="fas fa-search"></i>
+                <h3>Нічого не знайдено</h3>
+                <p>Спробуйте змінити параметри пошуку</p>
+                <a href="{% url 'properties:sale' %}" class="btn btn-primary">Скинути фільтри</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+

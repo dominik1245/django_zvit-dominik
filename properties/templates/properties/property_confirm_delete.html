@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Видалення оголошення - Dobre Wohnka{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="wrap">
+        <h1>Видалення оголошення</h1>
+        <nav class="breadcrumb">
+            <a href="{% url 'properties:home' %}">Головна</a>
+            <span>/</span>
+            <a href="{% url 'properties:property_list' %}">Оголошення</a>
+            <span>/</span>
+            <a href="{% url 'properties:property_detail' object.pk %}">{{ object.title }}</a>
+            <span>/</span>
+            <span>Видалення</span>
+        </nav>
+    </div>
+</section>
+
+<section class="delete-section">
+    <div class="wrap">
+        <div class="delete-container">
+            <div class="warning-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            
+            <h2>Ви впевнені, що хочете видалити це оголошення?</h2>
+            
+            <div class="property-preview">
+                <h3>{{ object.title }}</h3>
+                <p class="property-details">
+                    <i class="fas fa-map-marker-alt"></i> {{ object.city }}
+                    {% if object.address %}, {{ object.address }}{% endif %}
+                </p>
+                <p class="property-price">
+                    {{ object.price|floatformat:0 }} {{ object.get_currency_symbol }}
+                </p>
+            </div>
+            
+            <div class="warning-message">
+                <i class="fas fa-info-circle"></i>
+                <p>Ця дія не може бути скасована. Всі дані оголошення, включно з фотографіями, будуть видалені назавжди.</p>
+            </div>
+            
+            <form method="post" class="delete-form">
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-danger btn-large">
+                        <i class="fas fa-trash"></i> Так, видалити
+                    </button>
+                    <a href="{% url 'properties:property_detail' object.pk %}" class="btn btn-outline btn-large">
+                        <i class="fas fa-times"></i> Скасувати
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+.delete-section {
+    padding: 60px 0;
+    background: #f8f9fa;
+    min-height: 70vh;
+}
+
+.delete-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.warning-icon {
+    font-size: 4rem;
+    color: #e74c3c;
+    margin-bottom: 30px;
+}
+
+.delete-container h2 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+}
+
+.property-preview {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    margin: 30px 0;
+    border-left: 4px solid #e74c3c;
+}
+
+.property-preview h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+.property-details {
+    color: #7f8c8d;
+    margin-bottom: 10px;
+}
+
+.property-price {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.warning-message {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.warning-message i {
+    color: #856404;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.warning-message p {
+    color: #856404;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.btn-large {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+    .delete-container {
+        padding: 30px 20px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn-large {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}
+

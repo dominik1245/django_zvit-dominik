@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Про нас - Dobre Wohnka{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'properties/css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header page-header-about">
+    <div class="wrap">
+        <h1><i class="fas fa-info-circle"></i> Про Dobre Wohnka</h1>
+        <p>Ваш надійний партнер на ринку нерухомості</p>
+    </div>
+</section>
+
+<!-- Тестове зображення -->
+<div style="text-align: center; margin: 20px 0;">
+    <h2>Тестове зображення</h2>
+    <p>Шлях до зображення: {% static 'properties/images/about/test.jpg' %}</p>
+    <img src="{% static 'properties/images/about/test.jpg' %}" alt="Тестове зображення" style="max-width: 100%; border: 2px solid #ccc; padding: 10px;">
+</div>
+
+<section class="about-content">
+    <div class="wrap">
+        <div class="about-intro">
+            <div class="about-text">
+                <h2>Хто ми?</h2>
+                <p>
+                    <strong>Dobre Wohnka</strong> - це професійна компанія з надання послуг у сфері нерухомості.
+                    Ми працюємо на ринку вже понад 10 років і допомогли сотням клієнтів знайти їх ідеальні оселі.
+                </p>
+                <p>
+                    Наша місія - зробити процес пошуку, купівлі та оренди нерухомості максимально простим,
+                    прозорим та комфортним для кожного клієнта. Ми цінуємо ваш час та довіру!
+                </p>
+            </div>
+            <div class="about-image">
+                <img src="{% static 'properties/images/about/team.jpg' %}" alt="Наша команда" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+        
+        <div class="values-section">
+            <h2>Наші цінності</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-image">
+                        <img src="{% static 'properties/images/about/honesty.jpg' %}" alt="Чесність" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                    </div>
+                    <div class="value-content">
+                        <h3>Чесність</h3>
+                        <p>Ми завжди діємо відкрито та чесно з нашими клієнтами, забезпечуючи повну прозорість угод.</p>
+                    </div>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-image">
+                        <img src="{% static 'properties/images/about/professionalism.jpg' %}" alt="Професіоналізм" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                    </div>
+                    <div class="value-content">
+                        <h3>Професіоналізм</h3>
+                        <p>Наша команда складається з досвідчених експертів, які постійно підвищують свою кваліфікацію.</p>
+                    </div>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-image">
+                        <img src="{% static 'properties/images/about/care.jpg' %}" alt="Турбота" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                    </div>
+                    <div class="value-content">
+                        <h3>Турбота</h3>
+                        <p>Ми дбаємо про кожного клієнта та знаходимо індивідуальний підхід до кожної ситуації.</p>
+                    </div>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-image">
+                        <img src="{% static 'properties/images/about/reliability.jpg' %}" alt="Надійність" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                    </div>
+                    <div class="value-content">
+                        <h3>Надійність</h3>
+                        <p>Юридичний супровід та гарантія безпеки на всіх етапах співпраці.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="services-section">
+            <h2>Наші послуги</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="{% static 'properties/images/about/search.jpg' %}" alt="Підбір нерухомості" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                    </div>
+                    <div class="service-content">
+                        <h3>Підбір нерухомості</h3>
+                        <p>Допоможемо знайти ідеальний варіант відповідно до ваших побажань та бюджету.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="{% static 'properties/images/about/legal.jpg' %}" alt="Юридичний супровід" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                    </div>
+                    <div class="service-content">
+                        <h3>Юридичний супровід</h3>
+                        <p>Повна перевірка документів та безпечне оформлення угоди.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="{% static 'properties/images/about/valuation.jpg' %}" alt="Оцінка нерухомості" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                    </div>
+                    <div class="service-content">
+                        <h3>Оцінка нерухомості</h3>
+                        <p>Професійна оцінка ринкової вартості вашої нерухомості.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="{% static 'properties/images/about/consultation.jpg' %}" alt="Консультації" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                    </div>
+                    <div class="service-content">
+                        <h3>Консультації</h3>
+                        <p>Експертні поради з усіх питань, пов'язаних з нерухомістю.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Фото та відео</h3>
+                    <p>Професійна фото та відеозйомка об'єктів нерухомості.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Реклама об'єктів</h3>
+                    <p>Ефективне просування вашої нерухомості на всіх популярних платформах.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="team-section">
+            <h2>Чому обирають нас?</h2>
+            <div class="reasons-grid">
+                <div class="reason-item">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Більше 10 років досвіду на ринку</p>
+                </div>
+                <div class="reason-item">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Понад 500 успішних угод</p>
+                </div>
+                <div class="reason-item">
+                    <i class="fas fa-check-circle"></i>
+                    <p>1000+ об'єктів в базі</p>
+                </div>
+                <div class="reason-item">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Підтримка 24/7</p>
+                </div>
+                <div class="reason-item">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Прозорі умови співпраці</p>
+                </div>
+                <div class="reason-item">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Індивідуальний підхід</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-about">
+            <h2>Готові почати співпрацю?</h2>
+            <p>Зв'яжіться з нами прямо зараз, і ми допоможемо знайти ваш ідеальний дім!</p>
+            <a href="{% url 'properties:contact' %}" class="btn btn-primary btn-large">
+                <i class="fas fa-phone"></i> Зв'язатися з нами
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
