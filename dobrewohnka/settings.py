@@ -3,7 +3,7 @@ Django settings for Dobre Wohnka project.
 """
 
 from pathlib import Path
-import environ
+# import environ
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -14,7 +14,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'test',   # ← це назва твоєї бази
         'USER': 'root',
-        'PASSWORD': '1111',
+        'PASSWORD': '16062009d',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'dobrewohnka.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'realestate_simple',
         'USER': 'root',
         'PASSWORD': "16062009d",
